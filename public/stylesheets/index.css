@@ -56,20 +56,10 @@ main.frontpage {
 main.otherpage {
     border: 1px solid black;
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-columns: 1fr 6fr 1fr;
     grid-gap: 1em;    
     height: 80%;
     min-height: 350px;
     padding: 1em;
-}
-main.otherpage section {
-    display: block;
-    height: 650px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.question {
-    font-style: oblique;
-    font-weight: 700;
 }
 /* ----------------- footer -------------- */

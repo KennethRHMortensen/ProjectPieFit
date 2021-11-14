@@ -5,18 +5,27 @@
  */
 const fs = require("fs");                                   // file system access
 const httpStatus = require("http-status-codes");            // http sc
+const models = require("../models/handleContacts");         // models are datahandlers
 const lib = require("../controllers/libWebUtil");           // home grown utilities
-const models = require("../models/updContacts");            // models are datahandlers
+const templater = require("../controllers/myTemplater");    // home grown templater
 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-const getAndServe = async function (res, path, content) {   // asynchronous
+const getAndServe = async function (res, path, contentType) {   // asynchronous
+    let args = [...arguments];                              // arguments to array
+    let myargs = args.slice(3);                             // dump first three
+    let obj;
+
     await fs.readFile(path, function(err, data) {           // awaits async read
         if (err) {
             console.log(`Not found file: ${path}`);
         } else {
             res.writeHead(httpStatus.OK, {                  // yes, write header
-                "Content-Type": content
+                "Content-Type": contentType
             });
+                                                            // call templater 
+            while( typeof (obj = myargs.shift()) !== 'undefined' ) {
+                data = templater.data2html(data, obj)
+            }
+
             res.write(data);
             res.end();
         }
@@ -59,8 +68,11 @@ module.exports = {
         res.end();
     },
 
-    contacts(req, res) {
-        models.showContacts(req, res);
+    async contacts(req, res) {
+        let r = await models.showContacts(req, res);
+        let content = "text/html; charset=utf-8";
+        let path = "views/displayContacts.html";
+        getAndServe(res, path, content, {contacts: r}); // extra arg for templater
     },
 
     async receiveContacts(req, res, data) {
