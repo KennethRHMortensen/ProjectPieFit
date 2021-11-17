@@ -21,7 +21,7 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
             res.writeHead(httpStatus.OK, {                  // yes, write header
                 "Content-Type": contentType
             });
-                                                            // call templater 
+                                                            // call templater
             while( typeof (obj = myargs.shift()) !== 'undefined' ) {
                 data = templater.data2html(data, obj)
             }
@@ -57,8 +57,13 @@ module.exports = {
         let content = "image/png";
         getAndServe(res, path, content);
     },
-    ico(req, res) {
+    svg(req, res) {
         let path = "public" + req.url;
+        let content = "image/svg+xml";
+        getAndServe(res, path, content);
+    },
+    ico(req, res) {
+        let path ="public" + req.url;
         let content = "image/x-icon";
         getAndServe(res, path, content);
     },
