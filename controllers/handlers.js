@@ -7,7 +7,7 @@ const fs = require("fs");                                   // file system acces
 const httpStatus = require("http-status-codes");            // http sc
 const models = require("../models/handleContacts");         // models are datahandlers
 const lib = require("../controllers/libWebUtil");           // home grown utilities
-const templater = require("../controllers/myTemplater");    // home grown templater
+const nmlPlate = require("../controllers/myTemplater");     // home grown templater
 
 const getAndServe = async function (res, path, contentType) {   // asynchronous
     let args = [...arguments];                              // arguments to array
@@ -23,7 +23,7 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
             });
                                                             // call templater
             while( typeof (obj = myargs.shift()) !== 'undefined' ) {
-                data = templater.data2html(data, obj)
+                data = nmlPlate.doTheMagic(data, obj)
             }
 
             res.write(data);
@@ -77,7 +77,7 @@ module.exports = {
         let r = await models.showContacts(req, res);
         let content = "text/html; charset=utf-8";
         let path = "views/displayContacts.html";
-        getAndServe(res, path, content, {con:{contacts: r}}); // extra arg for templater
+        getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
     },
 
     async receiveContacts(req, res, data) {
