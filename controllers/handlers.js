@@ -77,7 +77,7 @@ module.exports = {
         let r = await models.showContacts(req, res);
         let content = "text/html; charset=utf-8";
         let path = "views/displayContacts.html";
-        getAndServe(res, path, content, {contacts: r}); // extra arg for templater
+        getAndServe(res, path, content, {con:{contacts: r}}); // extra arg for templater
     },
 
     async receiveContacts(req, res, data) {
