@@ -13,10 +13,13 @@ export const menu = [
         text: "Contacts",
         url: "/contacts"
     },
-,
     {
         text: "New Contact",
         url: "/contact"
+    },
+    {
+        text: "Login",
+        url: "/login"
     },
     {
         text: "About",

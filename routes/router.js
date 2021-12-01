@@ -11,6 +11,7 @@ const requestHandlers = {                             // application urls here
         "/about": handlers.home,
         "/contact": handlers.home,
         "/contacts": handlers.contacts,
+        "/login": handlers.home,
         "/notfound": handlers.notfound,
         "js": handlers.js,
         "css": handlers.css,
@@ -19,7 +20,8 @@ const requestHandlers = {                             // application urls here
         "ico": handlers.ico
     },
     POST: {
-        "/contact": handlers.receiveContacts
+        "/contact": handlers.receiveContacts,
+        "/login": handlers.verifyLogin
     }
 }
 

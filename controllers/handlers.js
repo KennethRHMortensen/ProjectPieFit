@@ -5,9 +5,10 @@
  */
 const fs = require("fs");                                   // file system access
 const httpStatus = require("http-status-codes");            // http sc
-const models = require("../models/handleContacts");         // models are datahandlers
+const models = require("../models/handleSundry");           // models are datahandlers
 const lib = require("../controllers/libWebUtil");           // home grown utilities
 const nmlPlate = require("../controllers/myTemplater");     // home grown templater
+const bcrypt = require('bcryptjs');
 
 const getAndServe = async function (res, path, contentType) {   // asynchronous
     let args = [...arguments];                              // arguments to array
@@ -84,6 +85,19 @@ module.exports = {
         let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
         await models.updContacts(req, res, obj);
         res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000"});
+        res.end();
+    },
+
+    async verifyLogin(req, res, data) {
+        let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
+        let r = await models.verify(req, res, obj);
+        if (r.length == 1 && await bcrypt.compare(obj.POST.password, ''+r[0].password)){
+            // make session
+            res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000?verified=true"});
+        } else {
+            // void session
+            res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000?verified=false"});
+        }
         res.end();
     }
 }
