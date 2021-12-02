@@ -3,12 +3,14 @@
  * handlers.js
  * Requesthandlers to be called by the router mechanism
  */
+const bcrypt = require('bcryptjs');                         // hashing sw
 const fs = require("fs");                                   // file system access
 const httpStatus = require("http-status-codes");            // http sc
-const models = require("../models/handleSundry");           // models are datahandlers
+const sessions = require("client-sessions");                // session sw
+
 const lib = require("../controllers/libWebUtil");           // home grown utilities
+const models = require("../models/handleSundry");           // models are datahandlers
 const nmlPlate = require("../controllers/myTemplater");     // home grown templater
-const bcrypt = require('bcryptjs');
 
 const getAndServe = async function (res, path, contentType) {   // asynchronous
     let args = [...arguments];                              // arguments to array

@@ -1,5 +1,6 @@
 /* myTemplater.js nml templating */
 "use strict";
+const User = require("../models/User");           // models are datahandlers
 
 exports.doTheMagic = function(data, obj) {
     data = '' + data;                   // buffer to string
@@ -12,7 +13,8 @@ exports.doTheMagic = function(data, obj) {
         if (typeof obj[doo] == 'object') {  // if object
             s = `<table>`;
             for (let c of obj[doo]) {       //  loop through obj (array)
-                s += `<tr><td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td></tr>`
+                let user = new User(c.name, c.email, c.phone);
+                s += user.toString();
             }
             s += `</table>`;
         } else if (typeof obj[doo] == 'string') {
