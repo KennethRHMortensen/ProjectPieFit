@@ -9,7 +9,7 @@ exports.doTheMagic = function(data, obj) {
     a.forEach(function(doo) {           // loop through then
         let regstr = `<42 ${doo} 24>`;  // materialize regex string from key
         regex = RegExp(regstr, 'g');    // create regex from that
-        let s;
+        let s = '';
         if (typeof obj[doo] == 'object') {  // if object
             s = `<table>`;
             for (let c of obj[doo]) {       //  loop through obj (array)

@@ -6,16 +6,24 @@
 const bcrypt = require('bcryptjs');                         // hashing sw
 const fs = require("fs");                                   // file system access
 const httpStatus = require("http-status-codes");            // http sc
-const sessions = require("client-sessions");                // session sw
 
+const cook = require("../controllers/sess");                // session cookies
 const lib = require("../controllers/libWebUtil");           // home grown utilities
-const models = require("../models/handleSundry");           // models are datahandlers
 const nmlPlate = require("../controllers/myTemplater");     // home grown templater
+const models = require("../models/handleSundry");           // models are datahandlers
+
+const isLoggedIn = async function (req, res) {
+    let session = cook.cookieObj(req, res);                 // create session object
+    let chk = session.get('login', { signed: true });
+    return chk == undefined ? false : true; 
+};
 
 const getAndServe = async function (res, path, contentType) {   // asynchronous
+    let obj;
     let args = [...arguments];                              // arguments to array
     let myargs = args.slice(3);                             // dump first three
-    let obj;
+                                                            // if more they are
+                                                            // data for template
 
     await fs.readFile(path, function(err, data) {           // awaits async read
         if (err) {
@@ -26,7 +34,7 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
             });
                                                             // call templater
             while( typeof (obj = myargs.shift()) !== 'undefined' ) {
-                data = nmlPlate.doTheMagic(data, obj)
+                data = nmlPlate.doTheMagic(data, obj)       // inject var data to html
             }
 
             res.write(data);
@@ -37,11 +45,19 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
 
 module.exports = {
     home(req, res) {
-        let path = req.url;
-        if (path === "/") {
-            path = "/index";
-        }
-        path = "views" + path + ".html";
+        let session = cook.cookieObj(req, res);    // create session object
+        let chk = session.get('login', { signed: true });
+        let path = "views/index.html";
+        let content = "text/html; charset=utf-8";
+        getAndServe(res, path, content, {welcome: chk});
+    },
+    login(req, res) {
+        let path = "views/login.html";
+        let content = "text/html; charset=utf-8";
+        getAndServe(res, path, content, {msg: 'Login required'});
+    },
+    other(req, res) {
+        let path = "views" + req.url + ".html";
         let content = "text/html; charset=utf-8";
         getAndServe(res, path, content);
     },
@@ -77,6 +93,10 @@ module.exports = {
     },
 
     async contacts(req, res) {
+        if (! await isLoggedIn(req, res)) {
+            req.url = '/login'
+            module.exports.login(req, res)
+        }
         let r = await models.showContacts(req, res);
         let content = "text/html; charset=utf-8";
         let path = "views/displayContacts.html";
@@ -85,21 +105,29 @@ module.exports = {
 
     async receiveContacts(req, res, data) {
         let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
-        await models.updContacts(req, res, obj);
-        res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000"});
-        res.end();
+        await models.updContacts(obj);
+        req.url = "/";                                  // repoint req
+        module.exports.home(req, res);                  // go to home page
     },
 
-    async verifyLogin(req, res, data) {
+    async verifyLogin (req, res, data) {
+        let session = cook.cookieObj(req, res);         // create session object
         let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
-        let r = await models.verify(req, res, obj);
-        if (r.length == 1 && await bcrypt.compare(obj.POST.password, ''+r[0].password)){
-            // make session
-            res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000?verified=true"});
+        let r = await models.verify(obj);
+        if (r.length == 1 && await bcrypt.compare(obj.POST.password, ''+r[0].password)) {
+            let name = '' + r[0].name;
+            session.set('login', name, { signed: true });       // set login cookie
+            req.url = "/";                                      // repoint req
+            module.exports.home(req, res);                      // go to home page
         } else {
-            // void session
-            res.writeHead(httpStatus.MOVED_PERMANENTLY, {"Location": "http://localhost:3000?verified=false"});
+            module.exports.logout(req, res);                    // unset login cookie
         }
-        res.end();
+    },
+
+    async logout (req, res) {
+        let session = cook.cookieObj(req, res);                 // create session object
+        session.set('login', { signed: true });                 // unset login cookie
+        req.url = "/login";                                     // repoint req
+        module.exports.login(req, res);                         // go to login page
     }
 }

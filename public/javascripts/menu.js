@@ -22,6 +22,10 @@ export const menu = [
         url: "/login"
     },
     {
+        text: "Logout",
+        url: "/logout"
+    },
+    {
         text: "About",
         url: "/about"
     }

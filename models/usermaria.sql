@@ -13,5 +13,5 @@ create table user (
 grant all on nodecontacts.* to nobody@localhost;
 
 insert into user values('nml', 'nmla@iba.dk', '1234', 'x');
-insert into user values('john', 'johndoe@doe.com', '1235', 'x');
+insert into user values('john', 'john@doe.com', '1235', 'x');
 insert into user values('jane', 'jane@doe.com', '1236', 'x');

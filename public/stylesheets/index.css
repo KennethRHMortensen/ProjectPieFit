@@ -62,4 +62,8 @@ main.otherpage {
     min-height: 350px;
     padding: 1em;
 }
+#loginmsg {
+    color: #c00;
+    font-weight: 700;
+}
 /* ----------------- footer -------------- */
