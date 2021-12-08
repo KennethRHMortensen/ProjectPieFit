@@ -1,5 +1,5 @@
 {
-  "name": "nativeskeleton",
+  "name": "projectPieFit",
   "version": "0.9.9",
   "description": "This README would normally document whatever steps are necessary to get your application up and running.",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://phidip@bitbucket.org/phidip/nativeskeleton.git"
+    "url": "git+https://github.com/KennethRHMortensen/projectPieFit.git"
   },
   "keywords": [],
-  "author": "Niels Müller Larsen <nmla@iba.dk> (http://dkexit.eu/)",
-  "license": "MIT",
+  "author": "",
+  "license": "",
   "bugs": {
-    "url": "https://bitbucket.org/phidip/nativeskeleton/issues"
+    "url": ""
   },
-  "homepage": "https://bitbucket.org/phidip/nativeskeleton#readme",
+  "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookies": "^0.8.0",

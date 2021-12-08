@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 module.exports = {
-    host     : '127.0.0.1',
-    user     : 'nobody',
-    password : 'test',
-    database : 'nodecontacts'
-}
+  host: "127.0.0.1",
+  user: "root",
+  password: "",
+  database: "nodecontacts",
+};
