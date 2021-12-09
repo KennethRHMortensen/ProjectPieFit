@@ -6,12 +6,16 @@ export const menu = [
         url: "/"
     },
     {
-        text: "Page",
-        url: "/page1"
+        text: "Collections",
+        url: "/collections"
     },
     {
-        text: "Contacts",
-        url: "/contacts"
+        text: "Cards",
+        url: "/cards"
+    },
+    {
+        text: "Card",
+        url: "/card"
     },
     {
         text: "New Contact",
@@ -25,8 +29,8 @@ export const menu = [
         text: "Logout",
         url: "/logout"
     },
-    {
+    /*{
         text: "About",
         url: "/about"
-    }
+    }*/
 ];

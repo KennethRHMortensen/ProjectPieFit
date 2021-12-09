@@ -92,14 +92,25 @@ module.exports = {
         res.end();
     },
 
-    async contacts(req, res) {
-        if (! await isLoggedIn(req, res)) {
+    async cards(req, res) {
+        /*if (! await isLoggedIn(req, res)) {
             req.url = '/login'
             module.exports.login(req, res)
-        }
+        }*/
         let r = await models.showContacts(req, res);
         let content = "text/html; charset=utf-8";
-        let path = "views/displayContacts.html";
+        let path = "views/cards.html";
+        getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
+    },
+
+    async card(req, res) {
+        /*if (! await isLoggedIn(req, res)) {
+            req.url = '/login'
+            module.exports.login(req, res)
+        }*/
+        let r = await models.showContacts(req, res);
+        let content = "text/html; charset=utf-8";
+        let path = "views/card.html";
         getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
     },
 

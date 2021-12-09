@@ -7,10 +7,11 @@ const handlers = require("../controllers/handlers");  // handlers module
 const requestHandlers = {                             // application urls here
     GET: {
         "/": handlers.home,
-        "/page1": handlers.other,
+        "/collections": handlers.other,
         "/about": handlers.other,
         "/contact": handlers.other,
-        "/contacts": handlers.contacts,
+        "/cards": handlers.cards,
+        "/card": handlers.card,
         "/login": handlers.login,
         "/logout": handlers.logout,
         "/notfound": handlers.notfound,
