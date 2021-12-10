@@ -1,6 +1,4 @@
-/* Piefit Database
-Problem with foreign keys!!!
-*/
+/* Piefit Database */
 
 -- Create piefit database
 drop database if exists piefit;
@@ -16,47 +14,56 @@ create table setting (
 );
 
 -- Insert data into setting table
-insert into setting values(null, 'Standard');
+insert into setting (settingid) values(null);
 insert into setting values(null, 'Dark mode');
 
 -- Create user table
 drop table if exists user;
 create table user (
-	username varchar(20) not null,
+	userid bigint unsigned not null auto_increment,
+	username varchar(20) not null unique,
 	email varchar(65) not null unique,
 	password varchar(30) not null,
 	role boolean not null default false,
-	primary key(username)
-	-- foreign key(username) references setting(settingid)
+	primary key(userid),
+	foreign key(userid) references setting(settingid)
 );
+
+-- Insert data into user table
+insert into user values(null, 'Admin', 'admin@email.dk', '1234', true);
+insert into user values(null, 'User', 'user@email.dk', '1234', false);
 
 -- Create personal table
 drop table if exists personal;
 create table personal (
-	personalid serial,
+	userid bigint unsigned not null auto_increment,
 	realname varchar(65) not null,
 	gender enum('Male', 'Female', 'Non-binary', 'Other') not null,
 	bio varchar(200) not null,
-	primary key(personalid)
-	-- foreign key(personalid) references user(username) on delete cascade
+	foreign key(userid) references user(userid) on delete cascade
 );
+
+-- Insert data into personal table
+insert into personal values(null, 'John Doe', 'Male', 'I''m so cool');
+insert into personal values(null, 'Jane Doe', 'Female', 'I''m so cool');
 
 -- Create image table
 drop table if exists image;
 create table image (
 	imageid serial,
 	image binary not null, -- Unsure about syntax for images
-	primary key(imageid)
-	-- foreign key(imageid) references user(username) on delete cascade
+	primary key(imageid),
+	foreign key(imageid) references user(userid) on delete cascade
 );
 
 -- Create payment table
 drop table if exists payment;
 create table payment (
+	paymentid serial,
 	creditcardinfo int not null,
 	cardholder varchar(65) not null,
-	primary key(creditcardinfo)
-	-- foreign key(creditcardinfo) references user(username) on delete cascade
+	primary key(paymentid),
+	foreign key(paymentid) references user(userid) on delete cascade
 );
 
 -- Create box table
@@ -69,6 +76,11 @@ create table box (
 	primary key(edition)
 );
 
+-- Insert data into box table
+insert into box values(null, 'HOME EDITION', 2.8, false);
+insert into box values(null, 'HIIT EDITION', 2.5, false);
+insert into box values(null, 'POWER EDITION', 3.6, false);
+
 -- Create subscribebox (relationship) table
 drop table if exists subscribebox;
 create table subscribebox (
@@ -78,11 +90,6 @@ create table subscribebox (
 	foreign key(username) references user(username),
 	foreign key(edition) references box(edition)
 );
-
--- Insert data into box table
-insert into box values(null, 'HOME EDITION', 2.8, false);
-insert into box values(null, 'HIIT EDITION', 2.5, false);
-insert into box values(null, 'POWER EDITION', 3.6, false);
 
 -- Create collection table
 drop table if exists collection;
@@ -105,10 +112,10 @@ insert into collection values(null, 'HIIT EDITION', 'CORE', 3, false);
 insert into collection values(null, 'HIIT EDITION', 'LOWERBODY', 3, false);
 insert into collection values(null, 'HIIT EDITION', 'UPPERBODY', 3, false);
 insert into collection values(null, 'HIIT EDITION', 'FULLBODY', 3, false);
-insert into collection values(null, 'HIIT EDITION', 'CORE', 3, false);
-insert into collection values(null, 'HIIT EDITION', 'LOWERBODY', 3, false);
-insert into collection values(null, 'HIIT EDITION', 'UPPERBODY', 3, false);
-insert into collection values(null, 'HIIT EDITION', 'FULLBODY', 3, false);
+insert into collection values(null, 'POWER EDITION', 'CORE', 3, false);
+insert into collection values(null, 'POWER EDITION', 'LOWERBODY', 3, false);
+insert into collection values(null, 'POWER EDITION', 'UPPERBODY', 3, false);
+insert into collection values(null, 'POWER EDITION', 'FULLBODY', 3, false);
 
 -- Create card table
 drop table if exists card;
@@ -340,49 +347,49 @@ create table has (
 -- Create text table
 drop table if exists text;
 create table text (
-	textid serial,
+	textid bigint unsigned not null auto_increment,
 	frontsubheading varchar(30) not null,
-	primary key(textid)
-	-- foreign key(textid) references card(hashtag) on delete cascade
+	primary key(textid),
+	foreign key(textid) references card(cardid) on delete cascade
 );
 
 -- Create workrest table
 drop table if exists workrest;
 create table workrest (
-	workrestid serial,
+	workrestid bigint unsigned not null auto_increment,
 	worktime int not null,
 	resttime int not null,
 	referencetime int not null,
-	primary key(workrestid)
-	-- foreign key(workrestid) references card(hashtag) on delete cascade
+	primary key(workrestid),
+	foreign key(workrestid) references card(cardid) on delete cascade
 );
 
 -- Create amrap table
 drop table if exists amrap;
 create table amrap(
-	amrapid serial,
+	amrapid bigint unsigned not null auto_increment,
 	reps int not null,
 	rounds int not null,
 	level enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
-	primary key(amrapid)
-	-- foreign key(amrapid) references card(hashtag) on delete cascade
+	primary key(amrapid),
+	foreign key(amrapid) references card(cardid) on delete cascade
 );
 
 -- Create repsrounds table
 drop table if exists repsrounds;
 create table repsrounds (
-	repsroundsid serial,
+	repsroundsid bigint unsigned not null auto_increment,
 	reps int not null,
 	time int not null,
 	level enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
-	primary key(repsroundsid)
-	-- foreign key(repsroundsid) references card(hashtag) on delete cascade
+	primary key(repsroundsid),
+	foreign key(repsroundsid) references card(cardid) on delete cascade
 );
 
 -- Create statistic table
 drop table if exists statistic;
 create table statistic (
-	statisticid serial,
+	statisticid bigint unsigned not null auto_increment,
 	point int not null default 0,
 	completedcard boolean not null default false,
 	primary key(statisticid)
@@ -390,46 +397,46 @@ create table statistic (
 
 drop table if exists hasstats;
 create table hasstats (
-	username varchar(20) not null,
-	hashtag varchar(20) not null,
-	statisticid serial,
-	primary key(username, hashtag, statisticid)
-	/*foreign key(username) references user(username),
-	foreign key(hashtag) references card(hashtag),
-	foreign key(statisticid) references statistic(statisticid)*/
+	userid bigint unsigned not null auto_increment,
+	cardid serial,
+	statisticid bigint unsigned not null auto_increment,
+	primary key(userid, hashtag, statisticid),
+	foreign key(userid) references user(userid),
+	foreign key(cardid) references card(cardid),
+	foreign key(statisticid) references statistic(statisticid)
 );
 
 -- Create workreststat table
 drop table if exists workreststat;
 create table workreststat (
-	username varchar(20) not null,
+	userid bigint unsigned not null auto_increment,
 	workrestid serial,
 	referencetimestat int not null,
-	primary key(username, workrestid)
-	/*foreign key(username) references user(username),
-	foreign key(workrestid) references workrest(workrestid)*/
+	primary key(userid, workrestid),
+	foreign key(userid) references user(userid),
+	foreign key(workrestid) references workrest(workrestid)
 );
 
 -- Create amrapstat table
 drop table if exists amrapstat;
 create table amrapstat (
-	username varchar(20) not null,
+	userid bigint unsigned not null auto_increment,
 	amrapid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	roundsstat int not null,
-	primary key(username, amrapid)
-	/*foreign key(username) references user(username),
-	foreign key(amrapid) references amrap(amrapid)*/
+	primary key(userid, amrapid),
+	foreign key(userid) references user(userid),
+	foreign key(amrapid) references amrap(amrapid)
 );
 
 -- Create repsroundsstat table
 drop table if exists repsroundsstat;
 create table repsroundsstat (
-	username varchar(20) not null,
+	userid bigint unsigned not null auto_increment,
 	repsroundsid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	timestat int not null,
-	primary key(username, repsroundsid)
-	/*foreign key(username) references user(username),
-	foreign key(repsroundsid) references repsrounds(repsroundsid)*/
+	primary key(userid, repsroundsid),
+	foreign key(userid) references user(userid),
+	foreign key(repsroundsid) references repsrounds(repsroundsid)
 );
