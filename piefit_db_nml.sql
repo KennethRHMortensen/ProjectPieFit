@@ -378,10 +378,10 @@ create table statistic (
 
 drop table if exists hasstats;
 create table hasstats (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	cardid serial,
-	statisticid bigint unsigned not null auto_increment,
-	primary key(userid, hashtag, statisticid),
+	statisticid bigint unsigned not null,
+	primary key(userid, cardid, statisticid),
 	foreign key(userid) references user(userid),
 	foreign key(cardid) references card(cardid),
 	foreign key(statisticid) references statistic(statisticid)
@@ -390,7 +390,7 @@ create table hasstats (
 -- Create workreststat table
 drop table if exists workreststat;
 create table workreststat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	workrestid serial,
 	referencetimestat int not null,
 	primary key(userid, workrestid),
@@ -401,7 +401,7 @@ create table workreststat (
 -- Create amrapstat table
 drop table if exists amrapstat;
 create table amrapstat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	amrapid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	roundsstat int not null,
@@ -413,7 +413,7 @@ create table amrapstat (
 -- Create repsroundsstat table
 drop table if exists repsroundsstat;
 create table repsroundsstat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	repsroundsid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	timestat int not null,
