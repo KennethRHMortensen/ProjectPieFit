@@ -370,7 +370,7 @@ create table repsrounds (
 -- Create statistic table
 drop table if exists statistic;
 create table statistic (
-	statisticid bigint unsigned not null auto_increment,
+	statisticid serial,
 	point int not null default 0,
 	completedcard boolean not null default false,
 	primary key(statisticid)
