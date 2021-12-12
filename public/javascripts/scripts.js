@@ -8,21 +8,21 @@ export function openMenu() {
   menuBtn.classList.add("open");
   menuOpen = true;
   burgerMenu.style.display = "block";
-  } se {
+  } else {
   menuBtn.classList.remove("open");
-   mnuOpen = false;
-    rgerMenu.style.display = "none";
+   menuOpen = false;
+    burgerMenu.style.display = "none";
   }
 }
 
-nuBtn.addEventListener("click", openMenu);
+menuBtn.addEventListener("click", openMenu);
 
 export function closeMenu() {
   if (menuOpen) {
       menuBtn.classList.remove("open");
-    menuOpen = false;
-    burgerMenu.style.display = "none";
-  }
+      menuOpen = false;
+      burgerMenu.style.display = "none";
+    }
   }
 
 headerLink.forEach((link) => {
