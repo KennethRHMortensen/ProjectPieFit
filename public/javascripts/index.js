@@ -2,10 +2,11 @@
 
 import { $, $c, $q, $qa, $ce } from "./domLib.js";
 import { /*makeMenu*/ setTitles, setFooter } from "./nQm.js";
-import { makeMenu, makeMain } from "./makePage.js";
+import { makeSwipe, makeMenu, makeMain } from "./makePage.js";
 
 const doSomething = function () {
-  makeMenu("menu");
+  makeSwipe("body");
+  makeMenu("menu-bottom");
   setTitles("Native Node, Sample");
   makeMain("main");
 

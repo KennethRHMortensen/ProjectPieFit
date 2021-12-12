@@ -4,19 +4,28 @@ export const makePage = function (where) {};
 
 /***** CREATE SWIPE CONTAINER ******/
 
-const makeSwipe = function (where) {
+export const makeSwipe = function (where) {
   // Create elements
   let swipeContainer = $ce("div");
   let btnWrapper = $ce("div");
-  let swipeButton = $ce("button");
 
+  let swipeOptions = ["Workouts", "Stats"];
+
+  for (let i = 0; i < swipeOptions.length; i++) {
+    let swipeButton = $ce("button");
+    let swipeInner = document.createTextNode(swipeOptions[i]);
+
+    swipeButton.setAttribute("class", "swipe-btn");
+
+    swipeButton.appendChild(swipeInner);
+    btnWrapper.appendChild(swipeButton);
+    swipeContainer.appendChild(btnWrapper);
+  }
   // Set attributes
-  swipeContainer.setAttribute("id", "swipe-container");
   btnWrapper.setAttribute("class", "swipe-btn-wrapper");
-  swipeButton.setAttribute("class", "swipe-button");
+  swipeContainer.setAttribute("id", "swipe-container");
 
   // Append elements
-  btnWrapper.appendChild(swipeButton);
   swipeContainer.appendChild(btnWrapper);
   $(where).appendChild(swipeContainer);
 };
@@ -118,7 +127,7 @@ export const makeMenu = function (where) {
   menuContainer.appendChild(btnWrapper);
   $(where).appendChild(menuContainer);
 
-  const menuBtn = $q(".menu-btn-line");
+  let menuBtnLine = $q(".menu-btn-line");
   let menuOpen = false;
   //   let burgerMenu = $("burgermenu");
 
@@ -126,16 +135,16 @@ export const makeMenu = function (where) {
     console.log("clicked");
     if (!menuOpen) {
       console.log("not open");
-      menuBtn.classList.add("open");
+      menuBtnLine.classList.add("open");
       menuOpen = true;
       //   burgerMenu.style.display = "block";
     } else {
       console.log("open");
-      menuBtn.classList.remove("open");
+      menuBtnLine.classList.remove("open");
       menuOpen = false;
       //   burgerMenu.style.display = "none";
     }
   }
 
-  menuBtn.addEventListener("click", openMenu);
+  burgerBtn.addEventListener("click", openMenu);
 };
