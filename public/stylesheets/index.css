@@ -3,7 +3,6 @@ html {
   height: 100%;
   margin: auto;
   padding: 0;
-  width: 90%;
   /* Color variables */
   --clr-black: #000;
   --clr-white: #fff;
@@ -79,6 +78,34 @@ main.otherpage {
 }
 /* ----------------- footer -------------- */
 
+
+/* ----------------- menu -------------- */
+
+#menu-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+#menu-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: #000;
+  justify-items: center;
+  align-items: center;
+}
+
+#menu-container button {
+  background: transparent;
+  border: none;
+}
+
+#menu-container i {
+  color: #ffffff;
+  transform: scale(2);
+}
+
 .menu-btn-burger {
   position: relative;
   display: flex;
@@ -93,7 +120,7 @@ main.otherpage {
 .menu-btn-line {
   width: 30px;
   height: 4px;
-  background-color: #161615;
+  background-color: #ffffff;
   border-radius: 5px;
   transition: all ease-in-out 0.3s;
 }
@@ -104,7 +131,7 @@ main.otherpage {
   position: absolute;
   width: 30px;
   height: 4px;
-  background-color: #161615;
+  background-color: #ffffff;
   border-radius: 5px;
   transition: all ease-in-out 0.3s;
 }
@@ -117,16 +144,47 @@ main.otherpage {
   transform: translateY(-10px);
 }
 
-.menu-btn.open .menu-btn-line {
+.menu-btn-line.open {
   transform: translateX(50px);
   background: transparent;
   box-shadow: none;
 }
 
-.menu-btn.open .menu-btn-line::before {
+.menu-btn-line.open::before {
   transform: rotate(-45deg) translate(-35px, -35px);
 }
 
-.menu-btn.open .menu-btn-line::after {
+.menu-btn-line.open::after {
   transform: rotate(45deg) translate(-35px, 35px);
+}
+
+/* ----------------- swipe section -------------- */
+
+#swipe-container {
+  
+  width: 100%;
+
+}
+
+.swipe-btn-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.swipe-btn-wrapper:after {
+  content: "";
+  background: #c00;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 5px;
+}
+
+.swipe-btn {
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  font-size: 2rem;
 }
