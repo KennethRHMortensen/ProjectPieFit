@@ -40,11 +40,13 @@ create table image (
 drop table if exists payment;
 create table payment (
 	paymentid bigint unsigned not null,
-	creditcardinfo int not null,
+	creditcardinfo varchar(65) not null,
 	cardholder varchar(65) not null,
 	primary key(paymentid),
 	foreign key(paymentid) references user(userid) on delete cascade
 );
+
+insert into payment values(1, '0000 0000 0000 0000', 'John Doe'); -- Does not point at the user
 
 -- Create box table
 drop table if exists box;
