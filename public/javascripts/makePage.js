@@ -8,7 +8,6 @@ export const makeSwipe = function (where) {
   // Create elements
   let swipeContainer = $ce("div");
   let btnWrapper = $ce("div");
-
   let swipeOptions = ["Workouts", "Stats"];
 
   for (let i = 0; i < swipeOptions.length; i++) {
@@ -20,6 +19,8 @@ export const makeSwipe = function (where) {
     swipeButton.appendChild(swipeInner);
     btnWrapper.appendChild(swipeButton);
     swipeContainer.appendChild(btnWrapper);
+
+    swipeButton.addEventListener("click", swipeSwitch);
   }
   // Set attributes
   btnWrapper.setAttribute("class", "swipe-btn-wrapper");
@@ -28,6 +29,11 @@ export const makeSwipe = function (where) {
   // Append elements
   swipeContainer.appendChild(btnWrapper);
   $(where).appendChild(swipeContainer);
+
+  function swipeSwitch() {
+    let btnSwitch = $q(".swipe-btn-wrapper");
+    btnSwitch.classList.toggle("isSwitch");
+  }
 };
 
 /***** CREATE MAIN CONTAINER ******/
@@ -80,7 +86,7 @@ const makePara = function (where) {
 
 /***** CREATE ADD PLACEHOLDER ******/
 
-const makeAd = function (where) {
+export const makeAd = function (where) {
   // Create elements
   let adContainer = $ce("div");
 
@@ -121,30 +127,89 @@ export const makeMenu = function (where) {
     menuContainer.appendChild(btnWrapper);
   }
 
-  // Append elements into html
+  // Append elements into HTML
   burgerBtn.appendChild(btnBurgerLine);
   btnWrapper.appendChild(burgerBtn);
   menuContainer.appendChild(btnWrapper);
   $(where).appendChild(menuContainer);
 
+  
+
+
+
+  // // Function for closing burgermenu
+  // function closeMenu() {
+  //   if (menuOpen) {
+  //     burgerBtnLine.classList.remove("open");
+  //     menuOpen = false;
+  //     burgerMenu.style.display = "none";
+  //   }
+  // }
+
+  // headerLink.forEach((link) => {
+  //   link.addEventListener("click", closeMenu);
+  // });
+};
+
+/***** CREATE BURGERMENU ******/
+
+export const makeBurgerMenu = function (where) {
+  // Create elements
+  let burgerNav = $ce("nav");
+  let navLinkList = $ce("ul");
+  let menuLinks = ["HOME", "STATS", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
+  
+
+
+  // WORKS FOR NAVIGATION ~ click "stats" for login page ~
+  let menuPages = ["/", "/login", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
+
+
+
+
+
+  for (let i = 0; i < menuLinks.length; i++) {
+    let navListItem = $ce("li");
+    let navItemLink = $ce("a");
+
+    navListItem.setAttribute("class", "burger-link");
+    navItemLink.setAttribute("href", menuPages[i]);
+    navItemLink.innerHTML = menuLinks[i];
+    
+    navListItem.appendChild(navItemLink);
+    navLinkList.appendChild(navListItem);
+  }
+  
+  // Set attributes
+  burgerNav.setAttribute("class", "burger-menu");
+
+  // Append elements into HTML
+  burgerNav.appendChild(navLinkList);
+  $(where).appendChild(burgerNav);
+
   let menuBtnLine = $q(".menu-btn-line");
   let menuOpen = false;
-  //   let burgerMenu = $("burgermenu");
+  let burgerMenu = $q(".burger-menu");
+  let burgerBtn = $q(".menu-btn-burger");
 
+
+
+  // Function for opening burgermenu
   function openMenu() {
-    console.log("clicked");
     if (!menuOpen) {
-      console.log("not open");
       menuBtnLine.classList.add("open");
       menuOpen = true;
-      //   burgerMenu.style.display = "block";
+      burgerMenu.style.display = "block";
     } else {
-      console.log("open");
       menuBtnLine.classList.remove("open");
       menuOpen = false;
-      //   burgerMenu.style.display = "none";
+      burgerMenu.style.display = "none";
     }
   }
 
   burgerBtn.addEventListener("click", openMenu);
-};
+}
+
+export const makeMyEditions = function (where) {
+
+}

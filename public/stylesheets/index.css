@@ -13,7 +13,7 @@ html {
   --clr-core: #c6d9db;
 }
 
-header nav,
+/* header nav,
 footer {
   align-items: center;
   background-color: black;
@@ -22,14 +22,14 @@ footer {
   grid-template-columns: 1fr 2fr;
   padding-left: 0.5em;
   padding-right: 0.5em;
-}
+} */
 
 /* ----------------- header -------------- */
 header nav h1 {
   border: 0px solid green;
   font-size: 2em;
 }
-header nav ul {
+/* header nav ul {
   border: 0px solid yellow;
   list-style: none;
   text-align: right;
@@ -51,7 +51,7 @@ header nav a {
 }
 header nav ul a:hover {
   text-decoration: underline;
-}
+} */
 
 /* ----------------- main -------------- */
 main.frontpage {
@@ -158,12 +158,55 @@ main.otherpage {
   transform: rotate(45deg) translate(-35px, 35px);
 }
 
+.isFrontpage {
+  display: none;
+}
+
+.notFrontpage {
+  display: block;
+}
+
+/* ----------------- burgermenu "opened" -------------- */
+
+.burger-menu {
+  display: none;
+  position: fixed;
+  background-color: #000000;
+  width: 100%;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  transition: ease-in-out all .3s;
+  /* z-index: -9999; */
+}
+
+.burger-menu ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.burger-menu ul li{
+  padding: 1rem;
+  font-size: 22px;
+}
+
+.burger-menu ul li a{
+  color: #ffffff;
+}
+
+.burger-open{
+  top: 0;
+  z-index: 9999;
+}
+
 /* ----------------- swipe section -------------- */
 
 #swipe-container {
-  
   width: 100%;
-
 }
 
 .swipe-btn-wrapper {
@@ -180,6 +223,11 @@ main.otherpage {
   left: 0;
   width: 50%;
   height: 5px;
+  transition: left ease-in-out .3s;
+}
+
+.swipe-btn-wrapper.isSwitch:after {
+  left: 50%;
 }
 
 .swipe-btn {
