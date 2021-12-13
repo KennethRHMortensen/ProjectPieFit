@@ -132,23 +132,6 @@ export const makeMenu = function (where) {
   btnWrapper.appendChild(burgerBtn);
   menuContainer.appendChild(btnWrapper);
   $(where).appendChild(menuContainer);
-
-  
-
-
-
-  // // Function for closing burgermenu
-  // function closeMenu() {
-  //   if (menuOpen) {
-  //     burgerBtnLine.classList.remove("open");
-  //     menuOpen = false;
-  //     burgerMenu.style.display = "none";
-  //   }
-  // }
-
-  // headerLink.forEach((link) => {
-  //   link.addEventListener("click", closeMenu);
-  // });
 };
 
 /***** CREATE BURGERMENU ******/
@@ -157,6 +140,7 @@ export const makeBurgerMenu = function (where) {
   // Create elements
   let burgerNav = $ce("nav");
   let navLinkList = $ce("ul");
+  
   let menuLinks = ["HOME", "STATS", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
   
 
