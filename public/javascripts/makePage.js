@@ -199,11 +199,13 @@ export const makeBurgerMenu = function (where) {
     if (!menuOpen) {
       menuBtnLine.classList.add("open");
       menuOpen = true;
-      burgerMenu.style.display = "block";
+      // burgerMenu.style.display = "block";
+      burgerMenu.classList.add("burger-open");
     } else {
       menuBtnLine.classList.remove("open");
       menuOpen = false;
-      burgerMenu.style.display = "none";
+      // burgerMenu.style.display = "none";
+      burgerMenu.classList.remove("burger-open");
     }
   }
 
