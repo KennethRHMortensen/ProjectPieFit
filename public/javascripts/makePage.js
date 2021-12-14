@@ -132,6 +132,7 @@ export const makeAd = function (where) {
   btnWrapper.appendChild(burgerBtn);
   menuContainer.appendChild(btnWrapper);
   $(where).appendChild(menuContainer);
+<<<<<<< HEAD
 
   // // Function for closing burgermenu
   // function closeMenu() {
@@ -146,6 +147,9 @@ export const makeAd = function (where) {
   //   link.addEventListener("click", closeMenu);
   // });
 };*/
+=======
+};
+>>>>>>> 9cb4359afc046ce5847c73bca3a088a385c0d292
 
 /***** CREATE BURGERMENU ******/
 
@@ -153,6 +157,7 @@ export const makeAd = function (where) {
   // Create elements
   let burgerNav = $ce("nav");
   let navLinkList = $ce("ul");
+<<<<<<< HEAD
   let menuLinks = [
     "home",
     "login",
@@ -165,6 +170,12 @@ export const makeAd = function (where) {
     "settings",
     "logout",
   ];
+=======
+  
+  let menuLinks = ["HOME", "STATS", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
+  
+
+>>>>>>> 9cb4359afc046ce5847c73bca3a088a385c0d292
 
   // WORKS FOR NAVIGATION ~ click "stats" for login page ~
   let menuPages = [
