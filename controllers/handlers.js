@@ -32,10 +32,10 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
             
             while( typeof (obj = myargs.shift()) !== 'undefined' ) {
                 if (path === 'views/displayUsers.html') {
-                    console.log(path);
+                    
                     data = nmlPlate.doTheMagicUser(data, obj)
                 } else {
-                    console.log(path);
+                    
                     data = nmlPlate.doTheMagic(data, obj)
                 }       // inject var data to html
             }
@@ -57,9 +57,9 @@ module.exports = {
         let content = "text/html; charset=utf-8";
         getAndServe(res, path, content, {msg: 'Login required'});
     },
-    home(req, res) {              
+    async home(req, res) {                   
         let session = cook.cookieObj(req, res);    // create session object
-        let chk = session.get('login', { signed: true });        
+        let chk = session.get('login', { signed: true });                   
         let path = "views/index.html";
         let content = "text/html; charset=utf-8";
         getAndServe(res, path, content, {welcome: chk});
