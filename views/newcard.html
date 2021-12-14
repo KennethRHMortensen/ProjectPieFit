@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset='utf-8'/>
+        <title class='title'></title>
+        <link rel='stylesheet' href='index.css'/>
+        <link rel='icon' type='image/svg+xml' href='favicon.svg'/>
+        <script src="https://kit.fontawesome.com/71b85ed9fc.js" crossorigin="anonymous"></script>
+        <script type='module' src='newCard.js'></script>
+    </head>
+    <body id="body">
+        <header id='menu-bottom'></header>
+        <main id="main" class='otherpage'>
+            <aside></aside>
+            <section>
+                <h2>Create Card</h2>
+                <form method="post" action="/createdcards">
+                    <div>
+                        <p>
+                            Workouttype: <br/>
+                            <input type="text" name="workouttype" required/>
+                        </p>
+                        <p>
+                            exercise:<br/>
+                            <input type="text" name="exercise" required/>
+                        </p>
+                        <p>
+                            Reps<br/>
+                            <input type="text" name="reps" required/>
+                        </p>
+                        <p>
+                            <br/><input type="submit" value="Send"/>
+                        </p>
+                    </div>
+                </form>
+            </section>
+            <aside></aside>
+        </main>
+        <footer>
+            <article id="cpryear"></article>
+        </footer>
+    </body>
+</html>

@@ -1,17 +1,13 @@
 "use strict";
 
 import { $, $c, $q, $qa, $ce } from "./domLib.js";
-import { makeMenu, setTitles /*setFooter*/ } from "./nQm.js";
-import {
-  makeSwipe,
-  /*makeMenu,*/ makeMain,
-  //makeBurgerMenu,
-} from "./makePage.js";
+import { /*makeMenu*/ setTitles /*setFooter*/ } from "./nQm.js";
+import { makeSwipe, makeMenu, makeMain, makeBurgerMenu } from "./makePage.js";
 
 const doSomething = function () {
   makeSwipe("body");
   makeMenu("menu-bottom");
-  //makeBurgerMenu("menu-bottom");
+  makeBurgerMenu("menu-bottom");
   setTitles("Native Node, Sample");
   makeMain("main");
 

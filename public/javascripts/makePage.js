@@ -99,7 +99,7 @@ export const makeAd = function (where) {
 
 /***** CREATE MENU ******/
 
-export const makeMenu = function (where) {
+/*export const makeMenu = function (where) {
   // Create elements
   let menuContainer = $ce("div");
   let btnWrapper = $ce("div");
@@ -133,10 +133,6 @@ export const makeMenu = function (where) {
   menuContainer.appendChild(btnWrapper);
   $(where).appendChild(menuContainer);
 
-  
-
-
-
   // // Function for closing burgermenu
   // function closeMenu() {
   //   if (menuOpen) {
@@ -149,24 +145,40 @@ export const makeMenu = function (where) {
   // headerLink.forEach((link) => {
   //   link.addEventListener("click", closeMenu);
   // });
-};
+};*/
 
 /***** CREATE BURGERMENU ******/
 
-export const makeBurgerMenu = function (where) {
+/*export const makeBurgerMenu = function (where) {
   // Create elements
   let burgerNav = $ce("nav");
   let navLinkList = $ce("ul");
-  let menuLinks = ["HOME", "STATS", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
-  
-
+  let menuLinks = [
+    "home",
+    "login",
+    "community",
+    "newcontact",
+    "newcard",
+    "createdcards",
+    "support",
+    "contact",
+    "settings",
+    "logout",
+  ];
 
   // WORKS FOR NAVIGATION ~ click "stats" for login page ~
-  let menuPages = ["/", "/login", "COMMUNITY", "SUPPORT", "CONTACT", "SETTINGS", "LOG OUT"]
-
-
-
-
+  let menuPages = [
+    "/",
+    "/login",
+    "community",
+    "/contact",
+    "/newcard",
+    "/createdcards",
+    "support",
+    "/contact",
+    "settings",
+    "logout",
+  ];
 
   for (let i = 0; i < menuLinks.length; i++) {
     let navListItem = $ce("li");
@@ -175,11 +187,11 @@ export const makeBurgerMenu = function (where) {
     navListItem.setAttribute("class", "burger-link");
     navItemLink.setAttribute("href", menuPages[i]);
     navItemLink.innerHTML = menuLinks[i];
-    
+
     navListItem.appendChild(navItemLink);
     navLinkList.appendChild(navListItem);
   }
-  
+
   // Set attributes
   burgerNav.setAttribute("class", "burger-menu");
 
@@ -191,8 +203,6 @@ export const makeBurgerMenu = function (where) {
   let menuOpen = false;
   let burgerMenu = $q(".burger-menu");
   let burgerBtn = $q(".menu-btn-burger");
-
-
 
   // Function for opening burgermenu
   function openMenu() {
@@ -210,8 +220,6 @@ export const makeBurgerMenu = function (where) {
   }
 
   burgerBtn.addEventListener("click", openMenu);
-}
+};*/
 
-export const makeMyEditions = function (where) {
-
-}
+export const makeMyEditions = function (where) {};
