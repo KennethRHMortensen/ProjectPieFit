@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title class='title'></title>
+    <link rel='stylesheet' href='index.css' />
+    <link rel='icon' type='image/svg+xml' href='favicon.svg' />
+    <script type='module' src='card.js'></script>
+</head>
+
+<body>
+    <header id='menu'></header>
+    <main class='otherpage'>
+        <aside></aside>
+        <section>
+            <h2>Please Register Card</h2>
+            <form method="post" action="/card">
+                <div>
+                    <p>
+                        Workouttype: <br />
+                        <input type="text" name="workouttype" required />
+                    </p>
+                    <p>
+                        Exercise:<br />
+                        <input type="text" name="exercise" required />
+                    </p>
+                    <p>
+                        Reps:<br />
+                        <input type="text" name="reps" required />
+                    </p>
+                    <p>
+                        <br /><input type="submit" value="Send" />
+                    </p>
+                </div>
+            </form>
+        </section>
+        <aside></aside>
+    </main>
+    <footer>
+        <article id="cpryear"></article>
+    </footer>
+</body>
+
+</html>
