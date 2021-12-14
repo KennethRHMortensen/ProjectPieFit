@@ -5,53 +5,43 @@ drop database if exists piefit;
 create database piefit;
 use piefit;
 
--- Create setting table
-drop table if exists setting;
-create table setting (
-	settingid serial,
-	theme enum('Standard', 'Dark mode') not null default 'Standard', -- More themes can be added later
-	primary key(settingid)
-);
-
--- Insert data into setting table
-insert into setting (settingid) values(null);
-insert into setting values(null, 'Dark mode');
-
--- Create user table
+-- Create user table (Combined setting table with user table)
 drop table if exists user;
 create table user (
-	userid bigint unsigned not null auto_increment,
+	userid serial,
 	username varchar(20) not null unique,
 	email varchar(65) not null unique,
 	password varchar(30) not null,
 	role boolean not null default false,
-	primary key(userid),
-	foreign key(userid) references setting(settingid)
+	theme enum('Standard', 'Dark mode') not null default 'Standard', -- More themes can be added later
+	primary key(userid)
 );
 
--- Insert data into user table
-insert into user values(null, 'Admin', 'admin@email.dk', '1234', true);
-insert into user values(null, 'User', 'user@email.dk', '1234', false);
+-- Insert data into user table (For test purposes)
+insert into user values(null, 'Admin', 'admin@email.dk', '1234', true, 'Standard');
+insert into user values(null, 'User', 'user@email.dk', '1234', false, 'Dark mode');
 
 -- Create personal table
 drop table if exists personal;
+drop table if exists personal;
 create table personal (
-	userid bigint unsigned not null auto_increment,
+	personalid bigint unsigned not null,
 	realname varchar(65) not null,
 	gender enum('Male', 'Female', 'Non-binary', 'Other') not null,
 	bio varchar(200) not null,
-	foreign key(userid) references user(userid) on delete cascade
+	primary key(personalid),
+	foreign key(personalid) references user(userid) on delete cascade
 );
 
--- Insert data into personal table
-insert into personal values(null, 'John Doe', 'Male', 'I''m so cool');
-insert into personal values(null, 'Jane Doe', 'Female', 'I''m so cool');
+-- Insert data into personal table (For test purposes)
+insert into personal values(1, 'John Doe', 'Male', 'I''m so cool!');
+insert into personal values(2, 'Jane Doe', 'Female', 'I''m awesome!');
 
 -- Create image table
 drop table if exists image;
 create table image (
-	imageid serial,
-	image binary not null, -- Unsure about syntax for images
+	imageid bigint unsigned not null,
+	image blob not null,
 	primary key(imageid),
 	foreign key(imageid) references user(userid) on delete cascade
 );
@@ -59,8 +49,8 @@ create table image (
 -- Create payment table
 drop table if exists payment;
 create table payment (
-	paymentid serial,
-	creditcardinfo int not null,
+	paymentid bigint unsigned not null,
+	creditcardinfo varchar(65) not null,
 	cardholder varchar(65) not null,
 	primary key(paymentid),
 	foreign key(paymentid) references user(userid) on delete cascade
@@ -81,13 +71,13 @@ insert into box values(null, 'HOME EDITION', 2.8, false);
 insert into box values(null, 'HIIT EDITION', 2.5, false);
 insert into box values(null, 'POWER EDITION', 3.6, false);
 
--- Create subscribebox (relationship) table
+-- Create subscribebox table (relationship)
 drop table if exists subscribebox;
 create table subscribebox (
-	username varchar(20) not null,
+	userid bigint unsigned not null,
 	edition varchar(20) not null,
-	primary key(username, edition),
-	foreign key(username) references user(username),
+	primary key(userid, edition),
+	foreign key(userid) references user(userid),
 	foreign key(edition) references box(edition)
 );
 
@@ -333,12 +323,53 @@ insert into exercise values(null, 'BUTT KICK', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'SHOULDER TAP', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'REVERSE CRUNCH', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'WALK OUT', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BIG JACK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SIDE V UP (L)', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SIDE V UP (R)', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, '1/2 BURPEE', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'PLANK TOE TAP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BUTT UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BICYCLE', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SPRINT STEPS', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SPRINT', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'ISOMETRIC SQUAT', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'PLANK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'GLUTE BRIDGE', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'POWER JACK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SOVIET KICK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'ROCKET CRUNCH', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'REVERSE LUNGE', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'DOUBLE SQUAT', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'REVERSE LUNGE (E)', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'V UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'FAST FEET', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'T PUSH UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BIG JACK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'FLUTTER KICK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'WALKING PUSH UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BURPEE JACK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'DIAMOND PUSH UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'CROSS 2 FEET', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'TOE TOUCH', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BURPEE', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'PLANK KNEE CHECK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'TRICEPS PUSH UP', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'PRISONER SQUAT PULL', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SIDE PLANK (L)', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SIDE PLANK (R)', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'OVER KNEE REACH', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SQUAT KICK', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'MT. CLIMBER', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'BACK EXTENSION', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'RUNNING MAN', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'SUMO SQUAT', 'Lorem Ipsum', 2, 'www.');
+insert into exercise values(null, 'MILITARY DRILL', 'Lorem Ipsum', 2, 'www.');
 
--- Create has (relationship) table 
+-- Create has table (relationship) 
 drop table if exists has;
 create table has (
 	hashtag varchar(20) not null,
-	exerciseid serial,
+	name varchar(20) not null,
 	primary key(hashtag, exerciseid),
 	foreign key(hashtag) references card(hashtag),
 	foreign key(exerciseid) references exercise(exerciseid)
@@ -347,7 +378,7 @@ create table has (
 -- Create text table
 drop table if exists text;
 create table text (
-	textid bigint unsigned not null auto_increment,
+	textid bigint unsigned not null,
 	frontsubheading varchar(30) not null,
 	primary key(textid),
 	foreign key(textid) references card(cardid) on delete cascade
@@ -356,11 +387,12 @@ create table text (
 -- Create workrest table
 drop table if exists workrest;
 create table workrest (
-	workrestid bigint unsigned not null auto_increment,
+	workrestid bigint unsigned not null,
+	workrestnumber int not null,
 	worktime int not null,
 	resttime int not null,
 	referencetime int not null,
-	primary key(workrestid),
+	primary key(workrestid, workrestnumber),
 	foreign key(workrestid) references card(cardid) on delete cascade
 );
 
@@ -395,12 +427,13 @@ create table statistic (
 	primary key(statisticid)
 );
 
+-- Create hasstats table (relationship)
 drop table if exists hasstats;
 create table hasstats (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	cardid serial,
-	statisticid bigint unsigned not null auto_increment,
-	primary key(userid, hashtag, statisticid),
+	statisticid bigint unsigned not null,
+	primary key(userid, cardid, statisticid),
 	foreign key(userid) references user(userid),
 	foreign key(cardid) references card(cardid),
 	foreign key(statisticid) references statistic(statisticid)
@@ -409,7 +442,7 @@ create table hasstats (
 -- Create workreststat table
 drop table if exists workreststat;
 create table workreststat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	workrestid serial,
 	referencetimestat int not null,
 	primary key(userid, workrestid),
@@ -420,7 +453,7 @@ create table workreststat (
 -- Create amrapstat table
 drop table if exists amrapstat;
 create table amrapstat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	amrapid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	roundsstat int not null,
@@ -432,7 +465,7 @@ create table amrapstat (
 -- Create repsroundsstat table
 drop table if exists repsroundsstat;
 create table repsroundsstat (
-	userid bigint unsigned not null auto_increment,
+	userid bigint unsigned not null,
 	repsroundsid serial,
 	levelstat enum('Beginner', 'Intermediate', 'Advanced', 'Elite') not null default 'Beginner',
 	timestat int not null,
