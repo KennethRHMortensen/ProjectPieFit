@@ -340,10 +340,11 @@ create table text (
 drop table if exists workrest;
 create table workrest (
 	workrestid bigint unsigned not null auto_increment,
+	lbn int not null,
 	worktime int not null,
 	resttime int not null,
 	referencetime int not null,
-	primary key(workrestid),
+	primary key(workrestid, lbn),
 	foreign key(workrestid) references card(cardid) on delete cascade
 );
 
