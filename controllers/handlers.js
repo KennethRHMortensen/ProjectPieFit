@@ -22,9 +22,6 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
     let obj;
     let args = [...arguments];                              // arguments to array
     let myargs = args.slice(3);                             // dump first three
-                                                            // if more they are
-                                                            // data for template
-
     await fs.readFile(path, function(err, data) {           // awaits async read
         if (err) {
             console.log(`Not found file: ${path}`);
@@ -32,10 +29,21 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
             res.writeHead(httpStatus.OK, {                  // yes, write header
                 "Content-Type": contentType
             });
-                                                            // call templater
+            
             while( typeof (obj = myargs.shift()) !== 'undefined' ) {
-                data = nmlPlate.doTheMagic(data, obj)       // inject var data to html
+                if (path === 'views/displayUsers.html') {
+                    console.log(path);
+                    data = nmlPlate.doTheMagicUser(data, obj)
+                } else {
+                    console.log(path);
+                    data = nmlPlate.doTheMagic(data, obj)
+                }       // inject var data to html
             }
+                                                            // call templater
+            /*while( typeof (obj = myargs.shift()) !== 'undefined' ) {
+                data = nmlPlate.doTheMagic(data, obj)       // inject var data to html
+            }*/
+            
 
             res.write(data);
             res.end();
@@ -44,19 +52,28 @@ const getAndServe = async function (res, path, contentType) {   // asynchronous
 };
 
 module.exports = {
-    home(req, res) {
-        let session = cook.cookieObj(req, res);    // create session object
-        let chk = session.get('login', { signed: true });
-        let path = "views/index.html";
-        let content = "text/html; charset=utf-8";
-        getAndServe(res, path, content, {welcome: chk});
-    },
     login(req, res) {
         let path = "views/login.html";
         let content = "text/html; charset=utf-8";
         getAndServe(res, path, content, {msg: 'Login required'});
     },
-    other(req, res) {
+    home(req, res) {              
+        let session = cook.cookieObj(req, res);    // create session object
+        let chk = session.get('login', { signed: true });        
+        let path = "views/index.html";
+        let content = "text/html; charset=utf-8";
+        getAndServe(res, path, content, {welcome: chk});
+    },    
+    signup(req, res) {
+        let path = "views" + req.url + ".html";
+        let content = "text/html; charset=utf-8";
+        getAndServe(res, path, content);
+    },
+    async other(req, res) {
+        if (! await isLoggedIn(req, res)) {
+            req.url = '/login'
+            module.exports.login(req, res)
+        }        
         let path = "views" + req.url + ".html";
         let content = "text/html; charset=utf-8";
         getAndServe(res, path, content);
@@ -92,20 +109,54 @@ module.exports = {
         res.end();
     },
 
-    async contacts(req, res) {
+    async users(req, res) {
         if (! await isLoggedIn(req, res)) {
             req.url = '/login'
             module.exports.login(req, res)
         }
-        let r = await models.showContacts(req, res);
+        let r = await models.showUsers(req, res);
         let content = "text/html; charset=utf-8";
-        let path = "views/displayContacts.html";
+        let path = "views/displayUsers.html";
         getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
     },
 
-    async receiveContacts(req, res, data) {
+    async cards(req, res) {
+        if (! await isLoggedIn(req, res)) {
+            req.url = '/login'
+            module.exports.login(req, res)
+        }
+        let r = await models.showCards(req, res);
+        let content = "text/html; charset=utf-8";
+        let path = "views/displayCards.html";
+        getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
+    },
+
+    async drafts(req, res) {
+        if (! await isLoggedIn(req, res)) {
+            req.url = '/login'
+            module.exports.login(req, res)
+        }
+        let r = await models.showDrafts(req, res);
+        let content = "text/html; charset=utf-8";
+        let path = "views/displayDrafts.html";
+        getAndServe(res, path, content, {contacts: r, a: 'right aside', b: 'left aside'}); // extra arg for templater
+    },
+
+    async receiveUsers(req, res, data) {        
         let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
-        await models.updContacts(obj);
+        await models.updUsers(obj);
+        req.url = "/";                                  // repoint req
+        module.exports.login(req, res);                  // go to home page
+    },
+    async receiveCard(req, res, data) {        
+        let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
+        await models.updCardsFromDrafts(obj);
+        req.url = "/";                                  // repoint req
+        module.exports.home(req, res);                  // go to home page
+    },
+    async receiveDraft(req, res, data) {        
+        let obj = lib.makeWebArrays(req, data);         // home made GET and POST objects
+        await models.updDrafts(obj);
         req.url = "/";                                  // repoint req
         module.exports.home(req, res);                  // go to home page
     },

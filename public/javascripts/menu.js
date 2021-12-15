@@ -10,12 +10,24 @@ export const menu = [
         url: "/page1"
     },
     {
-        text: "Contacts",
-        url: "/contacts"
+        text: "Users",
+        url: "/users"
     },
     {
-        text: "New Contact",
-        url: "/contact"
+        text: "Cards",
+        url: "/cards"
+    },
+    {
+        text: "Sign up",
+        url: "/user"
+    },
+    {
+        text: "Drafts",
+        url: "/drafts"
+    },
+    {
+        text: "New Card",
+        url: "/draft"
     },
     {
         text: "Login",

@@ -9,8 +9,12 @@ const requestHandlers = {                             // application urls here
         "/": handlers.home,
         "/page1": handlers.other,
         "/about": handlers.other,
-        "/contact": handlers.other,
-        "/contacts": handlers.contacts,
+        "/user": handlers.signup,
+        "/users": handlers.users,
+        "/card": handlers.other,
+        "/cards": handlers.cards,
+        "/drafts": handlers.drafts,
+        "/draft": handlers.other,
         "/login": handlers.login,
         "/logout": handlers.logout,
         "/notfound": handlers.notfound,
@@ -21,7 +25,9 @@ const requestHandlers = {                             // application urls here
         "ico": handlers.ico
     },
     POST: {
-        "/contact": handlers.receiveContacts,
+        "/user": handlers.receiveUsers,
+        "/draft": handlers.receiveDraft,
+        "/draftToCard": handlers.receiveCard,
         "/login": handlers.verifyLogin
     }
 }
