@@ -3,42 +3,51 @@
 export const menu = [
     {
         text: "Home",
-        url: "/"
+        url: "/home"
     },
-    {
-        text: "Page",
-        url: "/page1"
-    },
-    {
-        text: "Users",
-        url: "/users"
-    },
+
     {
         text: "Cards",
         url: "/cards"
     },
-    {
-        text: "Sign up",
-        url: "/user"
-    },
+
     {
         text: "Drafts",
         url: "/drafts"
     },
+
     {
         text: "New Card",
         url: "/draft"
     },
+
     {
-        text: "Login",
-        url: "/login"
+        text: "Users",
+        url: "/users"
     },
+
     {
         text: "Logout",
         url: "/logout"
     },
-    {
+
+    /*{
+        text: "Page",
+        url: "/page1"
+    },*/    
+    
+    /*{
+        text: "Sign up",
+        url: "/user"
+    },*/    
+    
+    /*{
+        text: "Login",
+        url: "/login"
+    },*/
+
+    /*{
         text: "About",
         url: "/about"
-    }
+    }*/
 ];
