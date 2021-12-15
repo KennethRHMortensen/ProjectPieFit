@@ -344,7 +344,6 @@ insert into exercise values(null, 'REVERSE LUNGE (E)', 'Lorem Ipsum', 2, 'www.')
 insert into exercise values(null, 'V UP', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'FAST FEET', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'T PUSH UP', 'Lorem Ipsum', 2, 'www.');
-insert into exercise values(null, 'BIG JACK', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'FLUTTER KICK', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'WALKING PUSH UP', 'Lorem Ipsum', 2, 'www.');
 insert into exercise values(null, 'BURPEE JACK', 'Lorem Ipsum', 2, 'www.');
@@ -369,7 +368,7 @@ insert into exercise values(null, 'MILITARY DRILL', 'Lorem Ipsum', 2, 'www.');
 drop table if exists has;
 create table has (
 	hashtag varchar(20) not null,
-	name varchar(20) not null,
+	exerciseid serial,
 	primary key(hashtag, exerciseid),
 	foreign key(hashtag) references card(hashtag),
 	foreign key(exerciseid) references exercise(exerciseid)
