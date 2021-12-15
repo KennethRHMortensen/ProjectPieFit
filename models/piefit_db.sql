@@ -22,7 +22,7 @@ insert into user values(null, 'Admin', 'admin@email.dk', '1234', true, 'Standard
 insert into user values(null, 'User', 'user@email.dk', '1234', false, 'Dark mode');
 
 -- Create personal table
-drop table if exists personal;
+
 drop table if exists personal;
 create table personal (
 	personalid bigint unsigned not null,
